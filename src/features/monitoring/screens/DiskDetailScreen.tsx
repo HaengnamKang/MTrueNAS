@@ -34,7 +34,7 @@ export default function DiskDetailScreen({ navigation }: Props) {
     >
       {disks.map((disk) => {
         let tempColor = colors.statusHealthy;
-        if (disk.temperature !== null) {
+        if (disk.temperature != null) {
           if (disk.temperature >= THRESHOLDS.DISK_TEMP_CRITICAL) tempColor = colors.statusCritical;
           else if (disk.temperature >= THRESHOLDS.DISK_TEMP_WARNING) tempColor = colors.statusDegraded;
         }
@@ -44,7 +44,7 @@ export default function DiskDetailScreen({ navigation }: Props) {
             <Card.Content>
               <View style={styles.header}>
                 <Text variant="titleMedium">{disk.name}</Text>
-                {disk.temperature !== null && (
+                {disk.temperature != null && (
                   <Text variant="labelMedium" style={{ color: tempColor, fontWeight: '600' }}>
                     {formatTemperature(disk.temperature, tempUnit)}
                   </Text>

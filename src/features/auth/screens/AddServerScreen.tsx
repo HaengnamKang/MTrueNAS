@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
-import { TextInput, Button, useTheme, HelperText, Snackbar } from 'react-native-paper';
+import { TextInput, Button, useTheme, HelperText, Snackbar, Switch, Text } from 'react-native-paper';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { AuthStackParamList } from '../../../navigation/types';
 import { isValidHost, isValidPort, isValidApiKey } from '../../../shared/utils/validators';
@@ -24,6 +24,7 @@ export default function AddServerScreen({ navigation }: Props) {
   const [host, setHost] = useState('');
   const [port, setPort] = useState(String(API.DEFAULT_PORT));
   const [apiKey, setApiKey] = useState('');
+  const [useTls, setUseTls] = useState(true);
   const [testing, setTesting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [testResult, setTestResult] = useState<string | null>(null);
@@ -43,7 +44,7 @@ export default function AddServerScreen({ navigation }: Props) {
     host: host.trim(),
     port: Number(port),
     apiVersion: 'modern',
-    useTls: true,
+    useTls,
   });
 
   const handleTestConnection = async () => {
@@ -153,6 +154,15 @@ export default function AddServerScreen({ navigation }: Props) {
           <HelperText type="error">Port must be between 1 and 65535</HelperText>
         )}
 
+        <View style={styles.switchRow}>
+          <Text variant="bodyLarge">Use HTTPS (TLS)</Text>
+          <Switch value={useTls} onValueChange={(v) => {
+            setUseTls(v);
+            if (!port || port === '443') setPort(v ? '443' : '80');
+            if (!port || port === '80') setPort(v ? '443' : '80');
+          }} />
+        </View>
+
         <TextInput
           label="API Key"
           value={apiKey}
@@ -212,6 +222,13 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 4,
+  },
+  switchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
+    paddingHorizontal: 4,
   },
   button: {
     marginTop: 8,

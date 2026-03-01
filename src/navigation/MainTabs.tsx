@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'react-native-paper';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import type { MainTabParamList } from './types';
 import DashboardScreen from '../features/dashboard/screens/DashboardScreen';
 import MonitoringStack from './MonitoringStack';
@@ -32,17 +33,30 @@ export default function MainTabs() {
           headerShown: true,
           headerTitle: 'MTrueNAS',
           tabBarLabel: 'Dashboard',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="view-dashboard" color={color} size={size} />
+          ),
         }}
       />
       <Tab.Screen
         name="Monitoring"
         component={MonitoringStack}
-        options={{ tabBarLabel: 'Monitor' }}
+        options={{
+          tabBarLabel: 'Monitor',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="chart-line" color={color} size={size} />
+          ),
+        }}
       />
       <Tab.Screen
         name="Storage"
         component={StorageStack}
-        options={{ tabBarLabel: 'Storage' }}
+        options={{
+          tabBarLabel: 'Storage',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="harddisk" color={color} size={size} />
+          ),
+        }}
       />
       <Tab.Screen
         name="Alerts"
@@ -51,6 +65,9 @@ export default function MainTabs() {
           headerShown: true,
           headerTitle: 'Alerts',
           tabBarLabel: 'Alerts',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bell-outline" color={color} size={size} />
+          ),
         }}
       />
       <Tab.Screen
@@ -60,6 +77,9 @@ export default function MainTabs() {
           headerShown: true,
           headerTitle: 'Settings',
           tabBarLabel: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cog-outline" color={color} size={size} />
+          ),
         }}
       />
     </Tab.Navigator>

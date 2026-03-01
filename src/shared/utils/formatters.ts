@@ -12,8 +12,11 @@ export function formatBytesPerSecond(bytes: number, decimals = 1): string {
   return `${formatBytes(bytes, decimals)}/s`;
 }
 
-export function formatPercent(value: number, decimals = 1): string {
-  return `${value.toFixed(decimals)}%`;
+export function formatPercent(value: number | string | null | undefined, decimals = 1): string {
+  if (value == null) return '—';
+  const num = Number(value);
+  if (isNaN(num)) return '—';
+  return `${num.toFixed(decimals)}%`;
 }
 
 export function formatUptime(seconds: number): string {
@@ -28,7 +31,8 @@ export function formatUptime(seconds: number): string {
   return parts.join(' ') || '0m';
 }
 
-export function formatTemperature(celsius: number, unit: 'celsius' | 'fahrenheit' = 'celsius'): string {
+export function formatTemperature(celsius: number | null | undefined, unit: 'celsius' | 'fahrenheit' = 'celsius'): string {
+  if (celsius == null) return '—';
   if (unit === 'fahrenheit') {
     return `${((celsius * 9) / 5 + 32).toFixed(0)}°F`;
   }

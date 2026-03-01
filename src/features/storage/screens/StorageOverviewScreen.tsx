@@ -46,7 +46,7 @@ export default function StorageOverviewScreen({ navigation }: Props) {
             <PoolUsageBar used={pool.allocated} total={pool.size} />
             <View style={styles.meta}>
               <Text variant="bodySmall" style={{ opacity: 0.6 }}>
-                Fragmentation: {pool.fragmentation}%
+                Fragmentation: {pool.fragmentation ?? 0}%
               </Text>
               {pool.scan.function !== 'NONE' && (
                 <Text variant="bodySmall" style={{ opacity: 0.6 }}>

@@ -16,7 +16,10 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.mtruenas.app",
       "infoPlist": {
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "UIBackgroundModes": ["fetch"],
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
       }
     },
     "android": {
@@ -36,7 +39,8 @@
       [
         "expo-notifications",
         {
-          "sounds": []
+          "sounds": [],
+          "enableBackgroundRemoteNotifications": false
         }
       ],
       "expo-background-fetch"

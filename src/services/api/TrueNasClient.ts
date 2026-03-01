@@ -31,6 +31,24 @@ export class TrueNasClient {
     return this.ws.call<string>('core.ping');
   }
 
+  async rebootSystem(reason = 'Reboot initiated from MTrueNAS app'): Promise<void> {
+    this.ws.prepareForDisconnect();
+    try {
+      await this.ws.call('system.reboot', [reason, { delay: null }]);
+    } catch {
+      // Expected: server disconnects during reboot
+    }
+  }
+
+  async shutdownSystem(reason = 'Shutdown initiated from MTrueNAS app'): Promise<void> {
+    this.ws.prepareForDisconnect();
+    try {
+      await this.ws.call('system.shutdown', [reason, { delay: null }]);
+    } catch {
+      // Expected: server disconnects during shutdown
+    }
+  }
+
   // Storage Pools
   async getPools(): Promise<Pool[]> {
     return this.ws.call<Pool[]>('pool.query');

@@ -29,7 +29,7 @@ export interface Pool {
   allocated: number;
   free: number;
   freeing: number;
-  fragmentation: number;
+  fragmentation: number | null;
   autotrim: { value: string };
 }
 

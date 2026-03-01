@@ -25,6 +25,7 @@ export default function MonitoringOverviewScreen({ navigation }: Props) {
         <Card
           key={card.screen}
           style={styles.card}
+          mode="outlined"
           onPress={() => navigation.navigate(card.screen)}
         >
           <Card.Content>

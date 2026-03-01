@@ -124,10 +124,13 @@ export class WebSocketService {
         }
       };
 
-      this.ws.onerror = () => {
+      this.ws.onerror = (event: Event) => {
         if (this._connectionState === 'connecting') {
           this.setConnectionState('error');
-          reject(new Error('WebSocket connection failed'));
+          const errorMsg = this.config?.useTls
+            ? 'WebSocket connection failed. If using a self-signed certificate, try disabling HTTPS.'
+            : 'WebSocket connection failed. Check host and port.';
+          reject(new Error(errorMsg));
         }
       };
     });
@@ -137,6 +140,11 @@ export class WebSocketService {
     this.intentionalClose = true;
     this.cleanup();
     this.setConnectionState('disconnected');
+  }
+
+  /** Mark connection as intentionally closing so reconnect logic is suppressed */
+  prepareForDisconnect() {
+    this.intentionalClose = true;
   }
 
   private cleanup() {
